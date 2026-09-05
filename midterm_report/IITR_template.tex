@@ -19,7 +19,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{tikz, graphicx}
-\usetikzlibrary{arrows.meta, positioning}
+\usetikzlibrary{arrows.meta, positioning, calc}
 \usepackage{booktabs}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{headline}{}
@@ -50,15 +50,15 @@
 %%%%%%%%%%%%% Slide 2: Objectives %%%%%%%%%%%%%%%%%
 \section{Objectives}
 \begin{frame}[t]{Objectives}
-\textbf{Goal:} give a UAV a way to know its own position when GPS/GNSS is unavailable, jammed, or spoofed, using only onboard sensors and physical measurements of its surroundings.
+\textbf{Goal:} UAV self-localization when GPS/GNSS is unavailable, jammed, or spoofed, using only onboard sensors.
 \vspace{0.5em}
 \begin{itemize}
-\item \textbf{This semester:} get an end-to-end navigation pipeline \emph{working} in simulation (image/data in, position out).
-\item \textbf{Next semester (through Apr 2027):} make the pipeline \emph{fast and power-efficient} (FPGA / embedded compute) enough to run onboard real flight hardware.
+\item \textbf{This semester:} working end-to-end pipeline, in simulation.
+\item \textbf{Next semester (through Apr 2027):} fast, power-efficient (FPGA) onboard deployment.
 \end{itemize}
 \vspace{0.5em}
 \begin{block}{Core approach: Scene-Aided Navigation}
-Replace the satellite signal with passive measurements the aircraft can already sense, such as terrain, gravity, magnetic field, and visual scene, matched against a reference map. This turns navigation into a \emph{physical measurement + estimation} problem, much like classical inertial guidance.
+Replace GPS with passive measurements the aircraft can already sense: terrain, gravity, magnetic field, and visual scene, matched against a reference map.
 \end{block}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,14 +66,17 @@ Replace the satellite signal with passive measurements the aircraft can already 
 %%%%%%%%%%%%% Slide 3: Motivation %%%%%%%%%%%%%%%%%
 \section{Motivation}
 \begin{frame}[t]{Motivation}
-\small
-\begin{itemize}
-\itemsep 0.4em
-\item GNSS is a \textbf{weak radio signal} broadcast from space: it is easily jammed, spoofed, or simply unavailable (urban canyons, mountains, contested airspace, indoors).
-\item Autonomous UAVs used in surveying, disaster response, and defense all need to keep flying \emph{when GPS fails}, not just when it works.
-\item \textbf{Mechanical perspective:} a UAV is fundamentally a mechanical system in motion. Its onboard IMU already measures physical quantities such as acceleration, rotation, and gravity using mechanical/MEMS sensors. The question this project asks: can these existing physical measurements, combined with a camera, replace the satellite link entirely?
-\item \textbf{Precedent:} TERCOM and DSMAC, terrain and scene matching systems developed for Cold-War cruise-missile guidance, proved decades ago that passive, GPS-free navigation using physical terrain data is reliable and flight-proven.
-\end{itemize}
+\begin{center}
+\begin{tikzpicture}[
+  box/.style={draw, rounded corners, minimum width=5.5cm, minimum height=2.7cm, text width=5.1cm, align=center, font=\footnotesize, inner sep=2.5mm},
+  node distance=5mm
+]
+\node[box] (a) {\textbf{Weak signal}\\[0.4em] GNSS is easily jammed, spoofed, or simply unavailable.};
+\node[box, right=of a] (b) {\textbf{Mechanical view}\\[0.4em] The IMU already senses acceleration, rotation, and gravity; a camera could replace the satellite link entirely.};
+\node[box, below=of a] (c) {\textbf{Must keep flying}\\[0.4em] Survey, disaster-response, and defense UAVs need to operate even when GPS fails.};
+\node[box, below=of b] (d) {\textbf{Precedent}\\[0.4em] TERCOM and DSMAC proved passive, GPS-free terrain and scene matching decades ago.};
+\end{tikzpicture}
+\end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -102,7 +105,7 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 \end{tabular}}
 \end{table}
 \vspace{0.3em}
-\textbf{Existing implementations reviewed:} VGG16\textsuperscript{[1]} and CLIP-based\textsuperscript{[2,3,7]} deep feature matching of drone frames to satellite tiles (sub-3--7\,m RMSE)\textsuperscript{[2,4]}, classical SIFT/ORB feature matching\textsuperscript{[5]}, terrain-weighted optimization against DEM maps\textsuperscript{[4,6]}.
+\textbf{Reviewed:} VGG16\textsuperscript{[1]}, CLIP\textsuperscript{[2,3,7]}, SIFT/ORB\textsuperscript{[5]}, and DEM terrain-weighting\textsuperscript{[4,6]}, achieving sub-3--7\,m RMSE\textsuperscript{[2,4]}.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -132,10 +135,9 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 \vspace{0.1em}
 \begin{itemize}
 \footnotesize
-\itemsep 0.2em
-\item \textbf{Current phase (no drone hardware yet):} feed pre-recorded aerial imagery into the pipeline to validate feasibility before committing to flight tests.
-\item \textbf{Baseline validated:} replicated the reference implementation\textsuperscript{[1]} in simulation; measured accuracy matches the numbers reported in the paper.
-\item \textbf{Current direction:} redesign the localization backbone as a \textbf{transformer-based} model in place of the paper's CNN features (architecture on next slide), then extend it with multimodal sensor fusion.
+\itemsep 0.3em
+\item \textbf{Baseline validated:} replicated the reference implementation\textsuperscript{[1]} in simulation; accuracy matches the paper's reported numbers.
+\item \textbf{Now:} redesigning the backbone as a \textbf{transformer} (next slide), trading compute and latency for higher accuracy, then adding multimodal sensor fusion.
 \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -143,18 +145,26 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 %%%%%%%%%%%%% Slide 5b: Proposed Model Architecture %%%%%%%%%%%%%%%%%
 \section{Proposed Model Architecture}
 \begin{frame}[t]{Proposed Model Architecture}
-\footnotesize
-\begin{enumerate}
-\itemsep 0.2em
-\item \textbf{Data:} aerial images paired with high-precision ground-truth coordinates (from the replicated baseline's flight/simulation data).
-\item \textbf{Stage 1 --- vision backbone:} a transformer-based encoder replaces the reference paper's VGG16 features\textsuperscript{[1]}, regressing image $\rightarrow$ coordinates directly.
-\item \textbf{Stage 2 --- multimodality:} fuse IMU, magnetometer, and gravimeter (accelerometer) vectors into the transformer alongside the visual stream; train end-to-end for high-precision localization.
-\end{enumerate}
-\vspace{0.4em}
+\begin{center}
+\begin{tikzpicture}[
+  node distance=4mm,
+  io/.style={draw, rounded corners, minimum height=1cm, minimum width=2.35cm, align=center, font=\tiny},
+  ->, >=Stealth
+]
+\node[io] (data) {High-precision\\image--coordinate\\data};
+\node[io, right=of data] (backbone) {Transformer\\vision backbone\\(replaces VGG16\textsuperscript{[1]})};
+\node[io, right=of backbone] (multi) {+ IMU /\\magnetometer /\\gravimeter fusion};
+\node[io, right=of multi] (out) {Latitude,\\Longitude};
+\draw (data) -- (backbone);
+\draw (backbone) -- (multi);
+\draw (multi) -- (out);
+\end{tikzpicture}
+\end{center}
+\vspace{0.5em}
 \begin{center}
 \begin{tikzpicture}
 \node[draw, dashed, thick, rounded corners, minimum width=0.92\linewidth, minimum height=4.0cm, align=center, font=\itshape\small, text width=0.8\linewidth]
-  {Architecture diagram --- to be inserted\\[0.3em]\normalfont\footnotesize (transformer encoder + multimodal fusion head)};
+  {Architecture diagram (to be inserted)};
 \end{tikzpicture}
 \end{center}
 \end{frame}
@@ -163,12 +173,23 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 %%%%%%%%%%%%% Slide 6: Timeline %%%%%%%%%%%%%%%%%
 \section{Timeline of the Work}
 \begin{frame}[t]{Timeline of the Work}
-\begin{block}{Phase 1: Now to Nov 2026 (this semester)}
-Reference implementation replicated and validated (done); redesign the localization backbone as a transformer model and extend it with multimodal fusion (IMU, magnetometer, gravimeter); get an end-to-end simulated pipeline (aerial image $\rightarrow$ position estimate) working.
-\end{block}
-\begin{block}{Phase 2: Jan 2027 to Apr 2027}
-Optimize the model for speed and power efficiency on FPGA, extending our lab project from last semester which conclusively showed FPGAs are highly power-efficient for this class of computation; integrate onto embedded flight hardware for a physical UAV test.
-\end{block}
+\begin{center}
+\begin{tikzpicture}[phase/.style={draw, rounded corners, minimum width=5.4cm, minimum height=3.1cm, align=center, font=\footnotesize}]
+\node[phase, fill=black!4] (p1) at (0,0) {%
+  \textbf{Phase 1: Now to Nov 2026}\\[0.4em]
+  Transformer backbone +\\ multimodal fusion\\ (IMU, magnetometer, gravimeter)\\[0.3em]
+  \emph{end-to-end pipeline, in simulation}
+};
+\node[phase, fill=black!9, right=0.4cm of p1] (p2) {%
+  \textbf{Phase 2: Jan to Apr 2027}\\[0.4em]
+  Optimize for speed \\ \& power on FPGA\\[0.3em]
+  \emph{physical UAV test}
+};
+\draw[->, thick] ($(p1.south west)+(0,-0.5)$) -- ($(p2.south east)+(0,-0.5)$);
+\end{tikzpicture}
+\end{center}
+\vspace{0.6em}
+\footnotesize Phase 2 extends our lab project from last semester, which showed FPGAs are highly power-efficient for this class of computation.
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
