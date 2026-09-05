@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.6.3)  5 SEP 2026 14:34
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026/Arch Linux) (preloaded format=pdflatex 2026.6.3)  5 SEP 2026 14:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -828,7 +828,7 @@ File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count371
 )
-No file IITR_template.aux.
+(./IITR_template.aux)
 \openout1 = `IITR_template.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
@@ -849,6 +849,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
 LaTeX Font Info:    ... okay on input line 38.
 LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 38.
 LaTeX Font Info:    ... okay on input line 38.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -906,6 +907,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package hyperref Info: Link coloring OFF on input line 38.
+
+(./IITR_template.out) (./IITR_template.out)
 \@outlinefile=\write5
 \openout5 = `IITR_template.out'.
 
@@ -975,30 +978,29 @@ Dictionary: translator-numbers-dictionary, Language: English
 (/usr/share/texmf-dist/tex/latex/translator/translator-theorem-dictionary-Engli
 sh.dict
 Dictionary: translator-theorem-dictionary, Language: English 
-)
-No file IITR_template.nav.
-<logo_white.png, id=13, 617.78806pt x 598.3956pt>
+) (./IITR_template.nav)
+<logo_white.png, id=33, 617.78806pt x 598.3956pt>
 File: logo_white.png Graphic file (type png)
 <use logo_white.png>
 Package pdftex.def Info: logo_white.png  used on input line 46.
 (pdftex.def)             Requested size: 28.77963pt x 27.88358pt.
-<titleslide_bg.png, id=15, 722.7pt x 542.025pt>
+<titleslide_bg.png, id=35, 722.7pt x 542.025pt>
 File: titleslide_bg.png Graphic file (type png)
 <use titleslide_bg.png>
 Package pdftex.def Info: titleslide_bg.png  used on input line 46.
 (pdftex.def)             Requested size: 364.1942pt x 273.15392pt.
-[1
+ [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texmf-dist/fonts
 /enc/dvips/base/8r.enc} <./titleslide_bg.png> <./logo_white.png>]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10.95> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 63.
-<logo_color.jpg, id=28, 616.82445pt x 605.26125pt>
+<logo_color.jpg, id=48, 616.82445pt x 605.26125pt>
 File: logo_color.jpg Graphic file (type jpg)
 <use logo_color.jpg>
 Package pdftex.def Info: logo_color.jpg  used on input line 63.
 (pdftex.def)             Requested size: 34.78664pt x 34.14322pt.
-<slide_bg.png, id=29, 771.63281pt x 578.16pt>
+<slide_bg.png, id=49, 771.63281pt x 578.16pt>
 File: slide_bg.png Graphic file (type png)
 <use slide_bg.png>
 Package pdftex.def Info: slide_bg.png  used on input line 63.
@@ -1006,75 +1008,68 @@ Package pdftex.def Info: slide_bg.png  used on input line 63.
  [2
 
  <./slide_bg.png> <./logo_color.jpg>]
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 77.
 File: logo_color.jpg Graphic file (type jpg)
 <use logo_color.jpg>
-Package pdftex.def Info: logo_color.jpg  used on input line 76.
+Package pdftex.def Info: logo_color.jpg  used on input line 77.
 (pdftex.def)             Requested size: 34.78664pt x 34.14322pt.
-
-Overfull \vbox (14.49767pt too high) detected at line 76
- []
-
 File: slide_bg.png Graphic file (type png)
 <use slide_bg.png>
-Package pdftex.def Info: slide_bg.png  used on input line 76.
+Package pdftex.def Info: slide_bg.png  used on input line 77.
 (pdftex.def)             Requested size: 364.1981pt x 273.14676pt.
-[3
+ [3
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 104
+LaTeX Font Info:    Trying to load font information for U+msa on input line 105
 .
- (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+
+(/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 104
+LaTeX Font Info:    Trying to load font information for U+msb on input line 105
 .
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 104.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 104.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 105.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <5> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 104.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 105.
 File: logo_color.jpg Graphic file (type jpg)
 <use logo_color.jpg>
-Package pdftex.def Info: logo_color.jpg  used on input line 104.
+Package pdftex.def Info: logo_color.jpg  used on input line 105.
 (pdftex.def)             Requested size: 34.78664pt x 34.14322pt.
 File: slide_bg.png Graphic file (type png)
 <use slide_bg.png>
-Package pdftex.def Info: slide_bg.png  used on input line 104.
+Package pdftex.def Info: slide_bg.png  used on input line 105.
 (pdftex.def)             Requested size: 364.1981pt x 273.14676pt.
  [4
 
 ]
 File: logo_color.jpg Graphic file (type jpg)
 <use logo_color.jpg>
-Package pdftex.def Info: logo_color.jpg  used on input line 137.
+Package pdftex.def Info: logo_color.jpg  used on input line 139.
 (pdftex.def)             Requested size: 34.78664pt x 34.14322pt.
-
-Overfull \vbox (38.036pt too high) detected at line 137
- []
-
 File: slide_bg.png Graphic file (type png)
 <use slide_bg.png>
-Package pdftex.def Info: slide_bg.png  used on input line 137.
+Package pdftex.def Info: slide_bg.png  used on input line 139.
 (pdftex.def)             Requested size: 364.1981pt x 273.14676pt.
-[5
+ [5
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <8> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 152.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 154.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <6> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 152.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 154.
 File: logo_color.jpg Graphic file (type jpg)
 <use logo_color.jpg>
-Package pdftex.def Info: logo_color.jpg  used on input line 152.
+Package pdftex.def Info: logo_color.jpg  used on input line 154.
 (pdftex.def)             Requested size: 34.78664pt x 34.14322pt.
 File: slide_bg.png Graphic file (type png)
 <use slide_bg.png>
-Package pdftex.def Info: slide_bg.png  used on input line 152.
+Package pdftex.def Info: slide_bg.png  used on input line 154.
 (pdftex.def)             Requested size: 364.1981pt x 273.14676pt.
  [6
 
@@ -1088,27 +1083,21 @@ Package pdftex.def Info: slide_bg.png  used on input line 152.
 \tf@snm=\write8
 \openout8 = `IITR_template.snm'.
 
- (./IITR_template.aux)
+
+(./IITR_template.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-Package rerunfilecheck Warning: File `IITR_template.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `IITR_template.out':
-(rerunfilecheck)             Before: <no file>
-(rerunfilecheck)             After:  D4D8D95FC0F2A989F2BE51D38AE1CC3E;631.
+Package rerunfilecheck Info: File `IITR_template.out' has not changed.
+(rerunfilecheck)             Checksum: D4D8D95FC0F2A989F2BE51D38AE1CC3E;631.
  ) 
 Here is how much of TeX's memory you used:
- 25718 strings out of 469515
- 506424 string characters out of 5470808
- 882986 words of memory out of 5000000
- 53825 multiletter control sequences out of 15000+600000
- 676863 words of font info for 100 fonts, out of 8000000 for 9000
+ 25773 strings out of 469515
+ 507020 string characters out of 5470808
+ 883063 words of memory out of 5000000
+ 53869 multiletter control sequences out of 15000+600000
+ 683997 words of font info for 106 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  128i,11n,123p,388b,814s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/
@@ -1116,10 +1105,10 @@ texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dist/fon
 ts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helveti
 c/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></usr/
 share/texmf-dist/fonts/type1/urw/zapfding/uzdr.pfb>
-Output written on IITR_template.pdf (6 pages, 4216374 bytes).
+Output written on IITR_template.pdf (6 pages, 4216609 bytes).
 PDF statistics:
- 96 PDF objects out of 1000 (max. 8388607)
- 62 compressed objects within 1 object stream
+ 112 PDF objects out of 1000 (max. 8388607)
+ 78 compressed objects within 1 object stream
  18 named destinations out of 1000 (max. 500000)
- 69 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 109 words of extra memory for PDF output out of 10000 (max. 10000000)
 

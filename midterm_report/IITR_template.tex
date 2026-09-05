@@ -50,7 +50,7 @@
 %%%%%%%%%%%%% Slide 2: Objectives %%%%%%%%%%%%%%%%%
 \section{Objectives}
 \begin{frame}[t]{Objectives}
-\textbf{Goal:} give a UAV a way to know its own position when GPS/GNSS is unavailable, jammed, or spoofed --- using only onboard sensors and physical measurements of its surroundings.
+\textbf{Goal:} give a UAV a way to know its own position when GPS/GNSS is unavailable, jammed, or spoofed, using only onboard sensors and physical measurements of its surroundings.
 \vspace{0.5em}
 \begin{itemize}
 \item \textbf{This semester:} get an end-to-end navigation pipeline \emph{working} in simulation (image/data in, position out).
@@ -58,7 +58,7 @@
 \end{itemize}
 \vspace{0.5em}
 \begin{block}{Core approach: Scene-Aided Navigation}
-Replace the satellite signal with passive measurements the aircraft can already sense --- terrain, gravity, magnetic field, visual scene --- matched against a reference map. This turns navigation into a \emph{physical measurement + estimation} problem, much like classical inertial guidance.
+Replace the satellite signal with passive measurements the aircraft can already sense, such as terrain, gravity, magnetic field, and visual scene, matched against a reference map. This turns navigation into a \emph{physical measurement + estimation} problem, much like classical inertial guidance.
 \end{block}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -66,12 +66,13 @@ Replace the satellite signal with passive measurements the aircraft can already 
 %%%%%%%%%%%%% Slide 3: Motivation %%%%%%%%%%%%%%%%%
 \section{Motivation}
 \begin{frame}[t]{Motivation}
+\small
 \begin{itemize}
+\itemsep 0.4em
 \item GNSS is a \textbf{weak radio signal} broadcast from space: it is easily jammed, spoofed, or simply unavailable (urban canyons, mountains, contested airspace, indoors).
-\item Autonomous UAVs used in surveying, disaster response, and defense all need to keep flying \emph{when GPS fails} --- not just when it works.
-\item[]
-\item \textbf{Mechanical perspective:} a UAV is fundamentally a mechanical system in motion. Its onboard IMU already measures physical quantities --- acceleration, rotation, gravity --- using mechanical/MEMS sensors. The question this project asks: can these existing physical measurements, combined with a camera, replace the satellite link entirely?
-\item \textbf{Precedent:} TERCOM and DSMAC --- terrain and scene matching systems developed for Cold-War cruise-missile guidance --- proved decades ago that passive, GPS-free navigation using physical terrain data is reliable and flight-proven.
+\item Autonomous UAVs used in surveying, disaster response, and defense all need to keep flying \emph{when GPS fails}, not just when it works.
+\item \textbf{Mechanical perspective:} a UAV is fundamentally a mechanical system in motion. Its onboard IMU already measures physical quantities such as acceleration, rotation, and gravity using mechanical/MEMS sensors. The question this project asks: can these existing physical measurements, combined with a camera, replace the satellite link entirely?
+\item \textbf{Precedent:} TERCOM and DSMAC, terrain and scene matching systems developed for Cold-War cruise-missile guidance, proved decades ago that passive, GPS-free navigation using physical terrain data is reliable and flight-proven.
 \end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -109,9 +110,9 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 \begin{frame}[t]{Proposed Work}
 \begin{center}
 \begin{tikzpicture}[
-  node distance=6mm and 8mm,
-  io/.style={draw, rounded corners, minimum height=0.8cm, minimum width=2.6cm, align=center, font=\scriptsize},
-  model/.style={draw, minimum height=2.4cm, minimum width=3.2cm, align=center, font=\scriptsize},
+  node distance=3.5mm and 6mm,
+  io/.style={draw, rounded corners, minimum height=0.55cm, minimum width=2.3cm, align=center, font=\tiny},
+  model/.style={draw, minimum height=1.7cm, minimum width=2.8cm, align=center, font=\tiny},
   ->, >=Stealth
 ]
 \node[io] (img) {Aerial image};
@@ -127,9 +128,10 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 \draw (model) -- (out);
 \end{tikzpicture}
 \end{center}
-\vspace{0.3em}
+\vspace{0.1em}
 \begin{itemize}
-\small
+\footnotesize
+\itemsep 0.2em
 \item \textbf{Current phase (no drone hardware yet):} feed pre-recorded aerial imagery into the pipeline to validate feasibility before committing to flight tests.
 \item \textbf{Immediate next step:} replicate a proven reference implementation (satellite-image matching network) in simulation as our working baseline.
 \item \textbf{Following step:} fuse in gravimetric and magnetic measurements for redundancy, then optimize the whole pipeline to run in real time on embedded flight hardware.
@@ -140,13 +142,13 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 %%%%%%%%%%%%% Slide 6: Timeline %%%%%%%%%%%%%%%%%
 \section{Timeline of the Work}
 \begin{frame}[t]{Timeline of the Work}
-\begin{block}{Phase 1 --- Now to Dec 2026 (this semester)}
+\begin{block}{Phase 1: Now to Dec 2026 (this semester)}
 Replicate a reference vision-matching implementation; get an end-to-end simulated pipeline (aerial image $\rightarrow$ position estimate) working.
 \end{block}
-\begin{block}{Phase 2 --- Jan 2027 to Apr 2027}
+\begin{block}{Phase 2: Jan 2027 to Apr 2027}
 Fuse in gravimetric and magnetic sensing for redundancy; stress-test accuracy across varied terrain and lighting conditions.
 \end{block}
-\begin{block}{Phase 3 --- May 2027 to July 2027}
+\begin{block}{Phase 3: May 2027 to July 2027}
 Optimize the pipeline for speed and power efficiency; integrate onto embedded flight hardware for a physical UAV test.
 \end{block}
 \end{frame}
