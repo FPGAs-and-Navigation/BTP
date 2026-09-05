@@ -1,0 +1,154 @@
+% IIT Roorkee presentation theme for beamer class used in Latex
+%
+% Manisha Verma, Department of Mathematics,  <mani7dma@iitr.ac.in>
+% Sudip Roy, Department of Computer Science and Engineering, <sudiproy.fcs@iitr.ac.in>, <http://faculty.iitr.ac.in/~sudiproy.fcs/>
+% Balasubramanian Raman, Department of Computer Science and Engineering, <balarfma@iitr.ac.in>, <https://sites.google.com/site/balaiitr/>
+%
+% Date: July 23, 2015
+% Version 1.0: First public version.
+
+\documentclass[compress]{beamer}
+
+\usetheme{IITR} % To use the theme of IITR for beamer class in Latex
+
+\usepackage{textpos}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{tikz, graphicx}
+\usetikzlibrary{arrows.meta, positioning}
+\usepackage{booktabs}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{headline}{}
+\setbeamercovered{transparent}
+\usebackgroundtemplate{\includegraphics [width=\paperwidth,height=\paperheight]{slide_bg.png}}
+\usepackage{url}
+
+%%%%%%%%%%%%% Title Slide %%%%%%%%%%%%%%%%%
+\title{Enabling Onboard Navigation for UAVs in GPS Denied Environments}
+\subtitle{MIP400A : B.Tech Project - MidTerm Evaluation}
+\author{\small Advika Sinha (23117010) \quad Cherish Puniani (23117042)\\
+\small Namay Rohatgi (23119022) \quad Varun R Mallya (23117098)}
+\date{{\scriptsize\today} \vspace{3em}}
+\institute{Indian Institute of Technology Roorkee}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%% Title Slide %%%%%%%%%%%%%%%%%
+{\usebackgroundtemplate{\includegraphics[width=\paperwidth,height=\paperheight]{titleslide_bg.png}}
+\begin{frame}[plain,t]
+\titlepage
+\begin{textblock*}{200mm}(.94\textwidth,-8.75cm)
+\includegraphics[height=.98cm]{logo_white.png}
+\end{textblock*}
+\end{frame}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% Slide 2: Objectives %%%%%%%%%%%%%%%%%
+\section{Objectives}
+\begin{frame}[t]{Objectives}
+\textbf{Goal:} give a UAV a way to know its own position when GPS/GNSS is unavailable, jammed, or spoofed --- using only onboard sensors and physical measurements of its surroundings.
+\vspace{0.5em}
+\begin{itemize}
+\item \textbf{This semester:} get an end-to-end navigation pipeline \emph{working} in simulation (image/data in, position out).
+\item \textbf{Next two semesters (through July 2027):} make the pipeline \emph{fast and power-efficient} enough to run onboard real flight hardware.
+\end{itemize}
+\vspace{0.5em}
+\begin{block}{Core approach: Scene-Aided Navigation}
+Replace the satellite signal with passive measurements the aircraft can already sense --- terrain, gravity, magnetic field, visual scene --- matched against a reference map. This turns navigation into a \emph{physical measurement + estimation} problem, much like classical inertial guidance.
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% Slide 3: Motivation %%%%%%%%%%%%%%%%%
+\section{Motivation}
+\begin{frame}[t]{Motivation}
+\begin{itemize}
+\item GNSS is a \textbf{weak radio signal} broadcast from space: it is easily jammed, spoofed, or simply unavailable (urban canyons, mountains, contested airspace, indoors).
+\item Autonomous UAVs used in surveying, disaster response, and defense all need to keep flying \emph{when GPS fails} --- not just when it works.
+\item[]
+\item \textbf{Mechanical perspective:} a UAV is fundamentally a mechanical system in motion. Its onboard IMU already measures physical quantities --- acceleration, rotation, gravity --- using mechanical/MEMS sensors. The question this project asks: can these existing physical measurements, combined with a camera, replace the satellite link entirely?
+\item \textbf{Precedent:} TERCOM and DSMAC --- terrain and scene matching systems developed for Cold-War cruise-missile guidance --- proved decades ago that passive, GPS-free navigation using physical terrain data is reliable and flight-proven.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% Slide 4: Background of similar work %%%%%%%%%%%%%%%%%
+\section{Background of Similar Work}
+\begin{frame}[t]{Background of Similar Work}
+\small
+Passive GPS-denied navigation methods, screened for feasibility on a small UAV:
+\vspace{0.3em}
+\begin{table}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Method} & \textbf{Physical quantity measured} & \textbf{Passive?} & \textbf{Assessment} \\
+\midrule
+Terrain matching (TERCOM) & Ground elevation & Yes & Proven, strong candidate \\
+Visual landmark matching & Camera imagery & Yes & Strong if paired with AI matching \\
+Gravity matching & Gravity anomalies & Yes & Promising, needs sensitive sensor \\
+Gravity-gradient nav. & $\partial g/\partial x,y,z$ & Yes & Very promising, higher precision \\
+Magnetic anomaly nav. & Magnetic field & Yes & Useful in mountainous terrain \\
+Quantum inertial sensing & Acceleration / rotation & Yes & No map needed; pure mechanics \\
+Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at altitude \\
+\bottomrule
+\end{tabular}}
+\end{table}
+\vspace{0.3em}
+\textbf{Existing implementations reviewed:} VGG16 and CLIP-based deep feature matching of drone frames to satellite tiles (sub-3--7\,m RMSE), classical SIFT/ORB feature matching, terrain-weighted optimization against DEM maps.
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% Slide 5: Proposed work %%%%%%%%%%%%%%%%%
+\section{Proposed Work}
+\begin{frame}[t]{Proposed Work}
+\begin{center}
+\begin{tikzpicture}[
+  node distance=6mm and 8mm,
+  io/.style={draw, rounded corners, minimum height=0.8cm, minimum width=2.6cm, align=center, font=\scriptsize},
+  model/.style={draw, minimum height=2.4cm, minimum width=3.2cm, align=center, font=\scriptsize},
+  ->, >=Stealth
+]
+\node[io] (img) {Aerial image};
+\node[io, below=of img] (vid) {Aerial video};
+\node[io, below=of vid] (grav) {Gravimetric data};
+\node[io, below=of grav] (mag) {Magnetometry};
+\node[model, right=of vid, xshift=6mm] (model) {Localization\\model\\(vision + physical\\sensor fusion)};
+\node[io, right=of model, xshift=6mm] (out) {Latitude,\\Longitude};
+\draw (img) -- (model);
+\draw (vid) -- (model);
+\draw (grav) -- (model);
+\draw (mag) -- (model);
+\draw (model) -- (out);
+\end{tikzpicture}
+\end{center}
+\vspace{0.3em}
+\begin{itemize}
+\small
+\item \textbf{Current phase (no drone hardware yet):} feed pre-recorded aerial imagery into the pipeline to validate feasibility before committing to flight tests.
+\item \textbf{Immediate next step:} replicate a proven reference implementation (satellite-image matching network) in simulation as our working baseline.
+\item \textbf{Following step:} fuse in gravimetric and magnetic measurements for redundancy, then optimize the whole pipeline to run in real time on embedded flight hardware.
+\end{itemize}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%% Slide 6: Timeline %%%%%%%%%%%%%%%%%
+\section{Timeline of the Work}
+\begin{frame}[t]{Timeline of the Work}
+\begin{block}{Phase 1 --- Now to Dec 2026 (this semester)}
+Replicate a reference vision-matching implementation; get an end-to-end simulated pipeline (aerial image $\rightarrow$ position estimate) working.
+\end{block}
+\begin{block}{Phase 2 --- Jan 2027 to Apr 2027}
+Fuse in gravimetric and magnetic sensing for redundancy; stress-test accuracy across varied terrain and lighting conditions.
+\end{block}
+\begin{block}{Phase 3 --- May 2027 to July 2027}
+Optimize the pipeline for speed and power efficiency; integrate onto embedded flight hardware for a physical UAV test.
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
