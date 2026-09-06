@@ -32,7 +32,7 @@
 \subtitle{MIP400A : B.Tech Project - MidTerm Evaluation}
 \author{\small Advika Sinha (23117010) \quad Cherish Puniani (23117042)\\
 \small Namay Rohatgi (23119022) \quad Varun R Mallya (23117144)\\[0.8em]
-\small \textit{Mentor:} Prof. Nitish Arya}
+\small \textit{Advisor:} Prof. Nitish Arya}
 \date{\vspace{2em}}
 \institute{Indian Institute of Technology Roorkee}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -162,26 +162,58 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%% Slide 5c: Dataset Requirements %%%%%%%%%%%%%%%%%
+\section{Dataset Requirements}
+\begin{frame}[t]{Dataset Requirements}
+\small
+Multimodal sensor fusion needs a dataset with synchronized, geo-tagged measurements per sample:
+\vspace{0.3em}
+\begin{table}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Modality} & \textbf{Role} \\
+\midrule
+Aerial / satellite image & Visual scene input to the ViT backbone \\
+Latitude, Longitude & Ground-truth label for localization \\
+Magnetometer reading & Input to the magnetic-anomaly encoder \\
+Gravimetric reading & Input to the gravity-anomaly encoder \\
+Altitude & Scale normalization for image and physical-field readings \\
+\bottomrule
+\end{tabular}}
+\end{table}
+\vspace{0.3em}
+\begin{block}{Challenge}
+No public dataset combines all five fields together; our advisor is helping procure aligned imagery with gravimetric/magnetometric survey data through IITR's Department of Earth Sciences (Geophysics).
+\end{block}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%% Slide 6: Timeline %%%%%%%%%%%%%%%%%
 \section{Timeline of the Work}
 \begin{frame}[t]{Timeline of the Work}
-\begin{center}
-\begin{tikzpicture}[phase/.style={draw, rounded corners, minimum width=5.4cm, minimum height=3.1cm, align=center, font=\footnotesize}]
-\node[phase, fill=black!4] (p1) at (0,0) {%
-  \textbf{Phase 1: Now to Nov 2026}\\[0.4em]
-  Transformer backbone +\\ multimodal fusion\\ (IMU, magnetometer, gravimeter)\\[0.3em]
-  \emph{end-to-end pipeline, in simulation}
-};
-\node[phase, fill=black!9, right=0.4cm of p1] (p2) {%
-  \textbf{Phase 2: Jan to Apr 2027}\\[0.4em]
-  Optimize for speed \\ \& power on FPGA\\[0.3em]
-  \emph{physical UAV test}
-};
-\draw[->, thick] ($(p1.south west)+(0,-0.5)$) -- ($(p2.south east)+(0,-0.5)$);
-\end{tikzpicture}
-\end{center}
-\vspace{0.6em}
-\footnotesize Phase 2 extends our lab project from last semester, which showed FPGAs are highly power-efficient for this class of computation.
+\begin{table}
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}ll@{}}
+\toprule
+\textbf{Target} & \textbf{Milestone} \\
+\midrule
+Early Oct 2026 & ViT vision backbone: initial training \& testing complete (vision-only pipeline) \\
+End Oct 2026 & At least one physical modality (gravimetric \emph{or} magnetometric) fused into the model \\
+Nov 2026 & Full multimodal fusion (vision + magnetometer + gravimeter), end-to-end pipeline in simulation \\
+Jan -- Apr 2027 & Optimize for speed \& power on FPGA; physical UAV test \\
+\bottomrule
+\end{tabular}}
+\end{table}
+\vspace{0.4em}
+\footnotesize
+\begin{itemize}
+\itemsep 0.25em
+\item \textbf{Compute:} training and testing will run on rented cloud GPUs (e.g., Modal) or on-campus GPUs, depending on availability.
+\item Phase 2 (FPGA) extends our lab project from last semester, which showed FPGAs are highly power-efficient for this class of computation.
+\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

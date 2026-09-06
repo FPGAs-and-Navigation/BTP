@@ -1,8 +1,8 @@
 # Speaker Notes: MidTerm Evaluation
 
-**Total: 6:00 to present + 1:00 for questions (4 presenters, split however you like).**
+**Total: 6:30 to present + 1:00 for questions (4 presenters, split however you like).**
 Slides only carry headlines and diagrams: use the notes below to fill in the actual sentences out loud.
-References (slides 8-9) are backup only: don't present them, just have them ready if someone asks "what's your source for X".
+References (slides 9-10) are backup only: don't present them, just have them ready if someone asks "what's your source for X".
 
 ---
 
@@ -42,10 +42,18 @@ Quick intro: project name, that this is the MidTerm evaluation, and the four nam
 - Be explicit about staging: first get the transformer-only version working and matching (or beating) the VGG16 baseline, *then* add the multimodal fusion on top, not simultaneously.
 - The dashed box is a placeholder. Say plainly that the detailed internal architecture (attention layout, fusion mechanism, i.e. concat vs. cross-attention, and where the sensor vectors enter the network) is still being finalized and will be in the endterm deck.
 
-### Slide 7: Timeline (~0:40)
-- Two phases only, ending April 2027; that's the actual constraint, not three phases through July.
-- Phase 1 (now to Nov 2026, this semester): transformer backbone plus multimodal fusion, entirely in simulation.
-- Phase 2 (Jan to Apr 2027): take that model and optimize it for speed and power on FPGA, then get it onto embedded flight hardware for a real UAV test.
+### Slide 7: Dataset Requirements (~0:35)
+- We need a dataset where every sample has, together and geo-tagged: an aerial/satellite image, lat/long ground truth, a magnetometer reading, a gravimetric reading, and altitude.
+- Say plainly this combination doesn't exist as a public dataset: image-only geo-localization sets are common, gravimetric/magnetic survey data exists separately, but nobody publishes them aligned to the same flight path.
+- That's why our advisor is stepping in to help procure aligned survey data through IITR's Department of Earth Sciences (Geophysics), rather than us building it from scratch.
+
+### Slide 8: Timeline (~0:45)
+- Not one big block: give the finer-grained milestones so it's clear what's due when.
+- Early Oct 2026: ViT vision backbone alone, initial training and testing done, vision-only pipeline working.
+- End Oct 2026: at least one physical modality, gravimetric or magnetometric, fused in on top of the vision backbone.
+- Nov 2026: full multimodal fusion (vision + magnetometer + gravimeter) working end-to-end in simulation.
+- Jan to Apr 2027 (Phase 2): optimize that model for speed and power on FPGA, then get it onto embedded flight hardware for a real UAV test.
+- Compute note: we'll train/test on rented cloud GPUs (Modal) or on-campus GPUs, whichever is available at the time.
 - Say explicitly that Phase 2 isn't starting from zero: it directly extends a lab project from last semester that already proved FPGAs are highly power-efficient for this class of computation, so the hardware-efficiency question is largely de-risked going in.
 
 ---
