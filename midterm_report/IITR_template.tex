@@ -59,7 +59,7 @@
 \end{itemize}
 \vspace{0.5em}
 \begin{block}{Core approach: Scene-Aided Navigation}
-Replace GPS with passive measurements the aircraft can already sense: terrain, gravity, magnetic field, and visual scene, matched against a reference map.
+Replace GPS with passive measurements the aircraft can already sense: terrain, gravity, magnetic field, and visual scene.
 \end{block}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,7 +121,7 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
   ->, >=Stealth
 ]
 \node[io] (img) {Aerial image};
-\node[io, below=of img] (vid) {Aerial video};
+\node[io, below=of img] (vid) {Aerial images};
 \node[io, below=of vid] (grav) {Gravimetric data};
 \node[io, below=of grav] (mag) {Magnetometry};
 \node[model, right=of vid, xshift=6mm] (model) {Localization\\model\\(vision + physical\\sensor fusion)};
