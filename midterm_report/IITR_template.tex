@@ -145,28 +145,19 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 %%%%%%%%%%%%% Slide 5b: Proposed Model Architecture %%%%%%%%%%%%%%%%%
 \section{Proposed Model Architecture}
 \begin{frame}[t]{Proposed Model Architecture}
+\vspace{-0.3em}
 \begin{center}
-\begin{tikzpicture}[
-  node distance=4mm,
-  io/.style={draw, rounded corners, minimum height=1cm, minimum width=2.35cm, align=center, font=\tiny},
-  ->, >=Stealth
-]
-\node[io] (data) {High-precision\\image--coordinate\\data};
-\node[io, right=of data] (backbone) {Transformer\\vision backbone\\(replaces VGG16\textsuperscript{[1]})};
-\node[io, right=of backbone] (multi) {+ IMU /\\magnetometer /\\gravimeter fusion};
-\node[io, right=of multi] (out) {Latitude,\\Longitude};
-\draw (data) -- (backbone);
-\draw (backbone) -- (multi);
-\draw (multi) -- (out);
-\end{tikzpicture}
+\includegraphics[width=\linewidth,height=0.62\textheight,keepaspectratio]{content/architecture.png}
 \end{center}
-\vspace{0.5em}
-\begin{center}
-\begin{tikzpicture}
-\node[draw, dashed, thick, rounded corners, minimum width=0.92\linewidth, minimum height=4.0cm, align=center, font=\itshape\small, text width=0.8\linewidth]
-  {Architecture diagram (to be inserted)};
-\end{tikzpicture}
-\end{center}
+\vspace{-0.2em}
+\begin{itemize}
+\tiny
+\itemsep 0.2em
+\item \textbf{Transformer vision backbone} (ViT) replaces VGG16\textsuperscript{[1]}; magnetometry and gravimetry get their own 1D-CNN/MLP encoders.
+\item Each modality is encoded as a \textbf{probabilistic representation} $(\mu,\Sigma)$, so sensor noise is carried forward explicitly.
+\item The \textbf{UDML core} estimates per-modality uncertainty $\rho$ and dependency $\alpha$, producing unbiased fusion weights $(w_v, w_m, w_g)$.
+\item Weighted features are fused and regressed to \textbf{latitude, longitude} by a fully connected head.
+\end{itemize}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
