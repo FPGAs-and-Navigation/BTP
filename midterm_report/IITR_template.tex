@@ -121,7 +121,7 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
   ->, >=Stealth
 ]
 \node[io] (img) {Aerial image};
-\node[io, below=of img] (vid) {Aerial images};
+\node[io, below=of img] (vid) {Aerial video*};
 \node[io, below=of vid] (grav) {Gravimetric data};
 \node[io, below=of grav] (mag) {Magnetometry};
 \node[model, right=of vid, xshift=6mm] (model) {Localization\\model\\(vision + physical\\sensor fusion)};
@@ -134,6 +134,7 @@ Wi-Fi / cellular / RF & Radio signal strength & No & Rejected: unavailable at al
 \end{tikzpicture}
 \end{center}
 \vspace{0.1em}
+{\tiny *planned as a stream of individual images from the video stream sent to model to get similar results to image input but with a sense of direction as well\par}
 \begin{itemize}
 \footnotesize
 \itemsep 0.3em
