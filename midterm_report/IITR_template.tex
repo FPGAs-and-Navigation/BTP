@@ -7,7 +7,15 @@
 % Date: July 23, 2015
 % Version 1.0: First public version.
 
-\documentclass[compress]{beamer}
+% Compiling under the jobname "IITR_template_169" produces a 16:9 widescreen
+% version (for modern projectors); any other jobname keeps the original 4:3.
+\edef\iitrJobname{\jobname}
+\edef\iitrWideJob{\detokenize{IITR_template_169}}
+\ifx\iitrJobname\iitrWideJob
+  \documentclass[compress,aspectratio=169]{beamer}
+\else
+  \documentclass[compress]{beamer}
+\fi
 
 \usetheme{IITR} % To use the theme of IITR for beamer class in Latex
 
@@ -26,6 +34,7 @@
 \setbeamercovered{transparent}
 \usebackgroundtemplate{\includegraphics [width=\paperwidth,height=\paperheight]{slide_bg.png}}
 \usepackage{url}
+\def\UrlBreaks{\do\/\do\-\do\_\do\.\do\?\do\=\do\&\do\%\do\#\do\~}
 
 %%%%%%%%%%%%% Title Slide %%%%%%%%%%%%%%%%%
 \title{Enabling Onboard Navigation for UAVs in GPS Denied Environments}
@@ -171,7 +180,6 @@ Multimodal sensor fusion needs a dataset with synchronized, geo-tagged measureme
 \vspace{0.3em}
 \begin{table}
 \centering
-\resizebox{\textwidth}{!}{%
 \begin{tabular}{@{}ll@{}}
 \toprule
 \textbf{Modality} & \textbf{Role} \\
@@ -182,7 +190,7 @@ Magnetometer reading & Input to the magnetic-anomaly encoder \\
 Gravimetric reading & Input to the gravity-anomaly encoder \\
 Altitude & Scale normalization for image and physical-field readings \\
 \bottomrule
-\end{tabular}}
+\end{tabular}
 \end{table}
 \vspace{0.3em}
 \begin{block}{Challenge}
@@ -220,8 +228,10 @@ Jan -- Apr 2027 & Optimize for speed \& power on FPGA; physical UAV test \\
 
 %%%%%%%%%%%%% References %%%%%%%%%%%%%%%%%
 \section{References}
-\begin{frame}[t]{References (1/2)}
+\begin{frame}[t]{References}
 \tiny
+\begin{columns}[t,onlytextwidth]
+\begin{column}{0.5\textwidth}
 \begin{itemize}
 \itemsep 0.35em
 \item[{[1]}] H.~Goforth and S.~Lucey, \emph{GPS-Denied UAV Localization using Pre-existing Satellite Imagery}, CMU Robotics Institute. \url{https://publications.ri.cmu.edu/gps-denied-uav-localization-using-pre-existing-satelliteimagery} (code: \url{https://github.com/hmgoforth/gps-denied-uav-localization})
@@ -232,10 +242,8 @@ Jan -- Apr 2027 & Optimize for speed \& power on FPGA; physical UAV test \\
 \item[{[6]}] GNSS-denied UAV geolocalization via terrain-weighted constraint optimization, sub-7\,m error, \emph{ScienceDirect}. \url{https://www.sciencedirect.com/science/article/pii/S1569843224006332}
 \item[{[7]}] CLIP-based UAV--satellite image matching, also derives heading direction, \emph{ScienceDirect}. \url{https://www.sciencedirect.com/science/article/pii/S2590123025041787}
 \end{itemize}
-\end{frame}
-
-\begin{frame}[t]{References (2/2)}
-\tiny
+\end{column}
+\begin{column}{0.5\textwidth}
 \begin{itemize}
 \itemsep 0.35em
 \item[{[8]}] A Review of Key Technologies in Gravity Matching Navigation, \emph{Sensors} (2026). \url{https://www.mdpi.com/1424-8220/26/13/4208}
@@ -247,6 +255,8 @@ Jan -- Apr 2027 & Optimize for speed \& power on FPGA; physical UAV test \\
 \item[{[14]}] X.~Zhu et al., \emph{TransGeo: Transformer Is All You Need for Cross-view Image Geo-localization}, CVPR 2022. \url{https://arxiv.org/abs/2204.00097}
 \item[{[15]}] \emph{FSRA}: A Transformer-Based Feature Segmentation and Region Alignment Method for UAV-View Geo-Localization. \url{https://arxiv.org/pdf/2201.09206}
 \end{itemize}
+\end{column}
+\end{columns}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

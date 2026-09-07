@@ -1,0 +1,8 @@
+\beamer@sectionintoc {1}{Objectives}{2}{0}{1}
+\beamer@sectionintoc {2}{Motivation}{3}{0}{2}
+\beamer@sectionintoc {3}{Background of Similar Work}{4}{0}{3}
+\beamer@sectionintoc {4}{Proposed Work}{5}{0}{4}
+\beamer@sectionintoc {5}{Proposed Model Architecture}{6}{0}{5}
+\beamer@sectionintoc {6}{Dataset Requirements}{7}{0}{6}
+\beamer@sectionintoc {7}{Timeline of the Work}{8}{0}{7}
+\beamer@sectionintoc {8}{References}{9}{0}{8}
